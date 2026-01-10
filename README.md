@@ -24,16 +24,8 @@ CV/
 │   ├── controller.js   # Business logic and event handling
 │   ├── app.js          # Application entry point
 │   └── README.md       # MVC documentation
-├── sections/           # Individual section files (legacy, now using MVC)
-│   ├── navigation.html
-│   ├── hero.html
-│   ├── profile.html
-│   ├── experience.html
-│   ├── skills.html
-│   ├── projects.html
-│   ├── education.html
-│   ├── contact.html
-│   └── footer.html
+├── resource/           # Assets
+│   └── avatar.jpg      # Profile picture
 └── README.md          # This file
 ```
 
@@ -65,7 +57,7 @@ CV/
 
 ### Option 1: Using a Local Server (Recommended)
 
-Due to browser security restrictions (CORS), you need to run a local server to load sections dynamically:
+Due to browser security restrictions (CORS), you need to run a local server:
 
 **Using Python:**
 
@@ -122,11 +114,9 @@ With MVC pattern, all data is centralized in `js/model.js`:
 
 The View (`js/view.js`) automatically renders all sections from the Model data.
 
-**Note**: The `sections/` directory contains legacy HTML files. The application now uses MVC pattern with data-driven rendering.
-
 ### Animations
 
-Modify animation timings and effects in `styles.css` and `script.js`.
+Modify animation timings and effects in `styles.css` and `js/controller.js`.
 
 ## Architecture
 

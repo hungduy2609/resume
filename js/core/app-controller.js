@@ -1,49 +1,59 @@
 /**
- * Controller - Business Logic & Event Handling
- * Coordinates between Model and View
+ * Main Application Controller
+ * Manages all section controllers and global event handlers
  */
 
-class CVController {
-    constructor(model, view) {
-        this.model = model;
-        this.view = view;
+class AppController {
+    constructor() {
+        this.sections = {};
         this.init();
     }
 
     /**
-     * Initialize the application
+     * Register a section controller
+     */
+    registerSection(name, controller) {
+        this.sections[name] = controller;
+    }
+
+    /**
+     * Initialize all sections
      */
     init() {
-        // Wait for DOM to be ready
+        // Wait for DOM and data to be ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', () => {
-                this.render();
-                this.attachEventListeners();
+                this.initSections();
+                this.attachGlobalEventHandlers();
             });
         } else {
-            this.render();
-            this.attachEventListeners();
+            this.initSections();
+            this.attachGlobalEventHandlers();
         }
     }
 
     /**
-     * Render all views
+     * Initialize all registered sections
      */
-    render() {
-        this.view.renderAll(this.model);
+    initSections() {
+        Object.values(this.sections).forEach(controller => {
+            if (controller && typeof controller.init === 'function') {
+                controller.init();
+            }
+        });
     }
 
     /**
-     * Attach all event listeners
+     * Attach global event handlers (navigation, scroll, etc.)
      */
-    attachEventListeners() {
+    attachGlobalEventHandlers() {
         this.handleNavbarScroll();
         this.handleMobileMenu();
         this.handleSmoothScroll();
         this.handleScrollToTop();
         this.handleActiveNavLink();
-        this.handleProjectDetails();
-        this.handleSkillTags();
+        this.handleScrollProgress();
+        this.initScrollAnimations();
     }
 
     /**
@@ -62,7 +72,7 @@ class CVController {
         }, 10);
 
         window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Initial check
+        handleScroll();
     }
 
     /**
@@ -78,7 +88,6 @@ class CVController {
             navMenu.classList.toggle('active');
             menuToggle.classList.toggle('active');
 
-            // Animate hamburger icon
             const spans = menuToggle.querySelectorAll('span');
             if (navMenu.classList.contains('active')) {
                 spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
@@ -91,9 +100,10 @@ class CVController {
             }
         });
 
-        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
-            if (navMenu.classList.contains('active') && !navMenu.contains(e.target) && !menuToggle.contains(e.target)) {
+            if (navMenu.classList.contains('active') &&
+                !navMenu.contains(e.target) &&
+                !menuToggle.contains(e.target)) {
                 navMenu.classList.remove('active');
                 menuToggle.classList.remove('active');
                 const spans = menuToggle.querySelectorAll('span');
@@ -109,7 +119,7 @@ class CVController {
      */
     handleSmoothScroll() {
         const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach((link) => {
+        navLinks.forEach(link => {
             link.addEventListener('click', (e) => {
                 const href = link.getAttribute('href');
                 if (href.startsWith('#')) {
@@ -121,10 +131,9 @@ class CVController {
                         const offsetTop = targetElement.offsetTop - 70;
                         window.scrollTo({
                             top: offsetTop,
-                            behavior: 'smooth',
+                            behavior: 'smooth'
                         });
 
-                        // Close mobile menu if open
                         const navMenu = document.getElementById('navMenu');
                         if (navMenu && navMenu.classList.contains('active')) {
                             navMenu.classList.remove('active');
@@ -159,12 +168,12 @@ class CVController {
         }, 10);
 
         window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Initial check
+        handleScroll();
 
         scrollTopBtn.addEventListener('click', () => {
             window.scrollTo({
                 top: 0,
-                behavior: 'smooth',
+                behavior: 'smooth'
             });
         });
     }
@@ -180,13 +189,13 @@ class CVController {
             const sections = document.querySelectorAll('.section, .hero');
             const scrollPosition = window.scrollY + 100;
 
-            sections.forEach((section) => {
+            sections.forEach(section => {
                 const sectionTop = section.offsetTop;
                 const sectionHeight = section.offsetHeight;
                 const sectionId = section.getAttribute('id');
 
                 if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                    navLinks.forEach((link) => {
+                    navLinks.forEach(link => {
                         link.classList.remove('active');
                         if (link.getAttribute('href') === `#${sectionId}`) {
                             link.classList.add('active');
@@ -200,47 +209,45 @@ class CVController {
     }
 
     /**
-     * Handle project details expand/collapse
+     * Handle scroll progress bar (mobile only)
      */
-    handleProjectDetails() {
-        // This will be called after render, so we need to use event delegation
-        document.addEventListener('click', (e) => {
-            if (e.target.matches('.project-responsibilities summary')) {
-                // Optional: Close other open details
-                // const allDetails = document.querySelectorAll('.project-responsibilities');
-                // allDetails.forEach(details => {
-                //     if (details !== e.target.closest('details') && details.hasAttribute('open')) {
-                //         details.removeAttribute('open');
-                //     }
-                // });
+    handleScrollProgress() {
+        const progressBar = document.getElementById('scrollProgressBar');
+        const progressFill = document.getElementById('scrollProgressFill');
+
+        if (!progressBar || !progressFill) return;
+
+        const updateProgress = this.throttle(() => {
+            const windowHeight = window.innerHeight;
+            const documentHeight = Math.max(
+                document.body.scrollHeight,
+                document.body.offsetHeight,
+                document.documentElement.clientHeight,
+                document.documentElement.scrollHeight,
+                document.documentElement.offsetHeight
+            );
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop || document.body.scrollTop;
+
+            // Calculate scroll percentage
+            const scrollableHeight = documentHeight - windowHeight;
+            let scrollPercentage = 0;
+
+            if (scrollableHeight > 0) {
+                scrollPercentage = (scrollTop / scrollableHeight) * 100;
             }
-        });
-    }
 
-    /**
-     * Handle skill tags hover effects
-     */
-    handleSkillTags() {
-        // Use event delegation for dynamically rendered elements
-        document.addEventListener(
-            'mouseenter',
-            (e) => {
-                if (e.target.matches('.skill-tag')) {
-                    e.target.style.transform = 'translateY(-2px) scale(1.05)';
-                }
-            },
-            true
-        );
+            // Ensure 100% when at the bottom (with small threshold for rounding)
+            if (scrollTop + windowHeight >= documentHeight - 1) {
+                scrollPercentage = 100;
+            }
 
-        document.addEventListener(
-            'mouseleave',
-            (e) => {
-                if (e.target.matches('.skill-tag')) {
-                    e.target.style.transform = 'translateY(0) scale(1)';
-                }
-            },
-            true
-        );
+            // Update progress bar
+            progressFill.style.width = `${Math.min(100, Math.max(0, scrollPercentage))}%`;
+        }, 10);
+
+        window.addEventListener('scroll', updateProgress);
+        window.addEventListener('resize', updateProgress); // Update on resize
+        updateProgress(); // Initial update
     }
 
     /**
@@ -248,8 +255,8 @@ class CVController {
      */
     initScrollAnimations() {
         const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -50px 0px',
+            threshold: 0,
+            rootMargin: '0px 0px 150px 0px',
         };
 
         const observer = new IntersectionObserver((entries) => {
@@ -261,15 +268,33 @@ class CVController {
             });
         }, observerOptions);
 
-        // Observe elements for animation
-        const animateElements = document.querySelectorAll('.highlight-item, .timeline-item, .skill-category, .project-card, .education-card');
+        const animateElements = document.querySelectorAll(
+            '.highlight-item, .timeline-item, .skill-category, .project-card, .education-card'
+        );
 
         animateElements.forEach((el, index) => {
             el.style.opacity = '0';
-            el.style.transform = 'translateY(30px)';
-            el.style.transition = `opacity 0.3s ease ${index * 0.05}s, transform 0.3s ease ${index * 0.05}s`;
+            el.style.transform = 'translateY(20px)';
+            el.style.transition = `opacity 0.3s ease ${index * 0.03}s, transform 0.3s ease ${index * 0.03}s`;
             observer.observe(el);
         });
+    }
+
+    /**
+     * Handle skill tags hover effects
+     */
+    handleSkillTags() {
+        document.addEventListener('mouseenter', (e) => {
+            if (e.target.matches('.skill-tag')) {
+                e.target.style.transform = 'translateY(-2px) scale(1.05)';
+            }
+        }, true);
+
+        document.addEventListener('mouseleave', (e) => {
+            if (e.target.matches('.skill-tag')) {
+                e.target.style.transform = 'translateY(0) scale(1)';
+            }
+        }, true);
     }
 
     /**
@@ -296,7 +321,7 @@ class CVController {
             const offsetTop = element.offsetTop - 70;
             window.scrollTo({
                 top: offsetTop,
-                behavior: 'smooth',
+                behavior: 'smooth'
             });
         }
     }
