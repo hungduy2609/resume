@@ -62,10 +62,6 @@ class HeroView extends BaseView {
                                 <div class="avatar-container">
                                     <img src="${personalInfo.avatar}" alt="${personalInfo.name}" class="avatar-image" />
                                 </div>
-                                <div class="card-content">
-                                    <div class="badge">Test Engineer of the Year 2024</div>
-                                    <div class="experience-badge">4+ Years Experience</div>
-                                </div>
                             </div>
                         </div>
                     </div>

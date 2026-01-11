@@ -84,10 +84,8 @@ class AppController {
 
         if (!menuToggle || !navMenu) return;
 
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-
+        // Only add animation for menu toggle icon if not already handled by navigation.js
+        const updateMenuIcon = () => {
             const spans = menuToggle.querySelectorAll('span');
             if (navMenu.classList.contains('active')) {
                 spans[0].style.transform = 'rotate(45deg) translate(5px, 5px)';
@@ -98,18 +96,26 @@ class AppController {
                 spans[1].style.opacity = '1';
                 spans[2].style.transform = 'none';
             }
-        });
+        };
 
+        // Observe menu state changes
+        const observer = new MutationObserver(() => {
+            updateMenuIcon();
+        });
+        observer.observe(navMenu, { attributes: true, attributeFilter: ['class'] });
+        updateMenuIcon(); // Initial update
+
+        // Close menu when clicking outside
         document.addEventListener('click', (e) => {
-            if (navMenu.classList.contains('active') &&
-                !navMenu.contains(e.target) &&
-                !menuToggle.contains(e.target)) {
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-                const spans = menuToggle.querySelectorAll('span');
-                spans[0].style.transform = 'none';
-                spans[1].style.opacity = '1';
-                spans[2].style.transform = 'none';
+            const target = e.target;
+            if (target && target.nodeType === Node.ELEMENT_NODE) {
+                if (navMenu.classList.contains('active') &&
+                    !navMenu.contains(target) &&
+                    !menuToggle.contains(target) &&
+                    !target.closest('#menuToggle')) {
+                    navMenu.classList.remove('active');
+                    menuToggle.classList.remove('active');
+                }
             }
         });
     }
@@ -285,14 +291,16 @@ class AppController {
      */
     handleSkillTags() {
         document.addEventListener('mouseenter', (e) => {
-            if (e.target.matches('.skill-tag')) {
-                e.target.style.transform = 'translateY(-2px) scale(1.05)';
+            const target = e.target;
+            if (target && target.nodeType === Node.ELEMENT_NODE && target.matches && target.matches('.skill-tag')) {
+                target.style.transform = 'translateY(-2px) scale(1.05)';
             }
         }, true);
 
         document.addEventListener('mouseleave', (e) => {
-            if (e.target.matches('.skill-tag')) {
-                e.target.style.transform = 'translateY(0) scale(1)';
+            const target = e.target;
+            if (target && target.nodeType === Node.ELEMENT_NODE && target.matches && target.matches('.skill-tag')) {
+                target.style.transform = 'translateY(0) scale(1)';
             }
         }, true);
     }
