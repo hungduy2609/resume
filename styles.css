@@ -946,6 +946,33 @@ body {
     transition: all var(--transition-fast);
 }
 
+.skill-tag--with-icon {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-xs);
+}
+
+.skill-tag-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--primary-color);
+    flex-shrink: 0;
+}
+
+.skill-tag-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.skill-tag-logo {
+    width: 20px;
+    height: 20px;
+    object-fit: contain;
+    flex-shrink: 0;
+    vertical-align: middle;
+}
+
 .skill-tag:hover {
     background: var(--primary-color);
     color: white;

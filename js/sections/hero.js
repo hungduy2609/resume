@@ -29,9 +29,7 @@ class HeroView extends BaseView {
                             </h1>
                             <p class="hero-subtitle">${personalInfo.title}</p>
                             <p class="hero-description">
-                                Passionate automation tester with 4+ years of experience in manual and automated testing.
-                                Skilled in designing robust automation frameworks, optimizing test strategies, and ensuring
-                                high-quality software solutions.
+                                Automation Test Engineer with 4+ years of experience in manual and automation testing. Strong in designing scalable automation frameworks, CI/CD integration, and performance testing. Experienced in enterprise systems with a proactive mindset toward quality, efficiency, and continuous improvement.
                             </p>
                             <div class="hero-buttons">
                                 <a href="#contact" class="btn btn-primary">Get In Touch</a>

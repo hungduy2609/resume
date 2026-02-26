@@ -15,7 +15,7 @@ const CVData = {
     },
     profile: {
         description:
-            'Passionate automation tester with 4+ years of experience in manual and automated testing. Skilled in designing robust automation frameworks, optimizing test strategies, and ensuring high-quality software solutions. A proactive problem-solver with a keen eye for efficiency and detail.',
+            'Automation Test Engineer with 4+ years of experience in manual and automation testing. Strong in designing scalable automation frameworks, CI/CD integration, and performance testing. Experienced in enterprise systems with a proactive mindset toward quality, efficiency, and continuous improvement.',
         highlights: [
             {
                 icon: 'quality',
@@ -40,11 +40,12 @@ const CVData = {
             company: 'Vietnam Silicon',
             period: 'July 2025 – Present',
             responsibilities: [
-                'Design and implement advanced automation frameworks to improve test coverage and efficiency.',
-                'Collaborate with cross-functional teams to define testing strategies and best practices.',
-                'Develop and maintain comprehensive test automation suites using modern tools and technologies.',
-                'Analyze test results, identify trends, and provide actionable insights for quality improvement.',
-                'Contribute to continuous improvement of testing processes and methodologies.',
+                'Designed and implemented scalable test automation frameworks using Playwright and Cucumber, reducing regression testing time.',
+                'Restructured and optimized CI/CD pipelines with GitHub Actions to improve reliability and execution efficiency for UI and API automation tests.',
+                'Collaborated closely with development teams to ensure sufficient test coverage, improve product quality, and enable early defect detection.',
+                'Managed test execution, tracking, and reporting via Jira, increasing visibility and transparency of test status.',
+                'Developed and maintained API automation solutions using Axios, ensuring stable integrations and faster feedback during development.',
+                'Built performance testing frameworks with k6, executing load tests to identify bottlenecks and validate system scalability and stability under high traffic.',
             ],
         },
         {
@@ -79,11 +80,13 @@ const CVData = {
             technologies: ['Playwright', 'Cucumber', 'Github Actions', 'Jira', 'Axios'],
             position: 'Middle Automation Tester',
             responsibilities: [
-                'Design and implement test automation frameworks using Playwright and Cucumber',
-                'Set up CI/CD pipelines with Github Actions for automated testing',
-                'Collaborate with development teams to ensure test coverage and quality',
-                'Manage test execution and reporting using Jira',
-                'Develop API testing solutions using Axios',
+                'Designed and implemented automation frameworks for UI testing using Playwright and Cucumber',
+                'Set up and maintained CI/CD pipelines with GitHub Actions for automated UI and API test execution',
+                'Wrote, executed, and maintained manual test cases to ensure functional coverage and overall product quality',
+                'Worked closely with developers to align testing strategies, clarify requirements, and detect defects early',
+                'Tracked test progress, defects, and execution results using Jira',
+                'Implemented API testing using Axios to validate backend services',
+                'Created and executed performance tests with k6 to assess system scalability and stability',
             ],
         },
         {

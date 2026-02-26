@@ -36,7 +36,14 @@ class SkillsView extends BaseView {
                     ${cat.title}
                 </h3>
                 <div class="skill-tags">
-                    ${cat.items.map((item) => `<span class="skill-tag">${item}</span>`).join('')}
+                    ${cat.items
+                        .map((item) => {
+                            const logoUrl = getLogoUrl(item);
+                            return logoUrl
+                                ? `<span class="skill-tag skill-tag--with-icon"><img src="${logoUrl}" alt="${item}" class="skill-tag-logo">${item}</span>`
+                                : `<span class="skill-tag">${item}</span>`;
+                        })
+                        .join('')}
                 </div>
             </div>
         `

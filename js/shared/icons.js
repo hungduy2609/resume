@@ -95,6 +95,47 @@ const IconLibrary = {
 };
 
 /**
+ * Logo URLs for all skills (Devicon - CDN jsDelivr)
+ * Format: https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/<name>/<name>-original.svg
+ */
+const LogoUrls = {
+    // Programming
+    JavaScript: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg',
+    Java: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg',
+    'C#': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg',
+    Python: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg',
+    SQL: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/microsoftsqlserver/microsoftsqlserver-original.svg',
+    // Automation Tools (Cypress, Robot Framework, Cucumber: local SVG)
+    Cypress: 'https://cdn.jsdelivr.net/npm/simple-icons@latest/icons/cypress.svg',
+    Playwright: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/playwright/playwright-original.svg',
+    'Robot Framework': 'resource/logos/robotframework.svg',
+    'Rest Assured': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg',
+    Selenium: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/selenium/selenium-original.svg',
+    // CI/CD & Version Control
+    Git: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg',
+    GitLab: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/gitlab/gitlab-original.svg',
+    'Azure DevOps': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azuredevops/azuredevops-original.svg',
+    'Github Actions': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/githubactions/githubactions-original.svg',
+    // Testing Frameworks
+    JUnit: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/junit/junit-original.svg',
+    TestNG: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg',
+    Cucumber: 'https://cdn.freebiesupply.com/logos/large/2x/cucumber-logo-svg-vector.svg',
+    Postman: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postman/postman-original.svg',
+    Jira: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/jira/jira-original.svg',
+    Grafana: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/grafana/grafana-original.svg',
+    // Messaging (Azure = Service Bus; ActiveMQ dùng Apache)
+    ActiveMQ: 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/apache/apache-original.svg',
+    'Service Bus': 'https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/azure/azure-original.svg',
+};
+
+/**
+ * Get logo URL by skill name
+ */
+function getLogoUrl(skillName) {
+    return LogoUrls[skillName] || '';
+}
+
+/**
  * Get icon by name
  */
 function getIcon(iconName) {
